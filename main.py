@@ -10,17 +10,13 @@ def get_all_links_recursive(url, depth=1, max_depth=1):
         return
 
     try:
-        # Отправляем GET-запрос к указанному URL
         response = requests.get(url)
         response.raise_for_status()  # Проверяем статус ответа
 
-        # Создаем объект BeautifulSoup для парсинга HTML-кода страницы
         soup = bs(response.text, 'html.parser')
 
-        # Используем метод find_all для поиска всех тегов 'a' (ссылок)
         links = soup.find_all('a')
 
-        # Выводим все найденные ссылки
         print(f"Links on {url}:")
         for link in links:
             href = link.get('href')
@@ -105,10 +101,8 @@ if __name__ == "__main__":
     parser.add_argument('-u', '--url', help='URL веб-страницы в формате https://example.com')
     parser.add_argument('-d', '--depth', type=int, default=1, help='Максимальная глубина поиска. По умолчанию равна 1')
 
-    # Разбираем аргументы командной строки
     args = parser.parse_args()
 
-    # Используем аргументы в вашем коде
     url = args.url
     depth = args.depth
 
@@ -116,5 +110,3 @@ if __name__ == "__main__":
         print("Введите -h для справки")
     else:
         get_all_links_recursive(url, 1, depth)
-
-
